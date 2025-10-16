@@ -22,16 +22,18 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-        '*'
-]
 
-
+# serverde
 # CSRF_TRUSTED_ORIGINS = [
-#     'http://127.0.0.1:8000',       # Local server
-#     'http://localhost',             # Local test
-#     'https://<cloud-run-domain>'    # Cloud Run domain
+#         '*'
 # ]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',       # Local server
+    'http://localhost',             # Local test
+    'https://<cloud-run-domain>'    # Cloud Run domain
+]
 
 # --- Applications ---
 INSTALLED_APPS = [
@@ -77,15 +79,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # --- Database configuration (Cloud Run + Local) ---
-CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
+import os
 
+# --- DB credentials ---
 DB_NAME = os.environ.get('DB_NAME', 'ecommerce_db')
 DB_USER = os.environ.get('DB_USER', 'ecommerce_user')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '12345')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 
-if CLOUD_SQL_CONNECTION_NAME:
+# --- Environment detection ---
+CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')  # Cloud Run üçün
+LOCAL = os.environ.get('LOCAL', 'True') == 'True'  # Lokal test üçün env dəyişəni
+
+# --- Host seçimi ---
+if CLOUD_SQL_CONNECTION_NAME and not LOCAL:
+    # Cloud Run-da işləyir, Private IP / Cloud SQL connector
     DB_HOST = f'/cloudsql/{CLOUD_SQL_CONNECTION_NAME}'
+elif LOCAL:
+    # Lokal PC-də test
+    # Lokalda Cloud SQL Proxy istifadə edilirsə 127.0.0.1, yoxsa Public IP
+    DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
+
 
 DATABASES = {
     'default': {
@@ -98,13 +112,8 @@ DATABASES = {
     }
 }
 
-# Local development üçün SQLite
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
+
 
 
 # --- Password validation ---
