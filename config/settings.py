@@ -24,8 +24,15 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-   '*'
+        '*'
 ]
+
+
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://127.0.0.1:8000',       # Local server
+#     'http://localhost',             # Local test
+#     'https://<cloud-run-domain>'    # Cloud Run domain
+# ]
 
 # --- Applications ---
 INSTALLED_APPS = [
@@ -92,6 +99,15 @@ DATABASES = {
         'PORT': DB_PORT,
     }
 }
+
+# Local development üçün SQLite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 # --- Password validation ---
 AUTH_PASSWORD_VALIDATORS = [
