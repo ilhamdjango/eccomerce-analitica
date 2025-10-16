@@ -1,11 +1,11 @@
 steps:
   # Docker image build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecommerce-analitic', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecommerce-analitica', '.']
 
   # Docker image push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/ecommerce-analitic']
+    args: ['push', 'gcr.io/$PROJECT_ID/ecommerce-analitica']
 
 images:
-  - 'gcr.io/$PROJECT_ID/ecommerce-analitic'
+  - 'gcr.io/$PROJECT_ID/ecommerce-analitica'

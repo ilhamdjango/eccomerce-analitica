@@ -27,7 +27,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
         '*'
 ]
-##
+#
 
 # CSRF_TRUSTED_ORIGINS = [
 #     'http://127.0.0.1:8000',       # Local server
@@ -91,13 +91,12 @@ DB_PORT = os.environ.get('DB_PORT', '5432')
 CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
 LOCAL = os.environ.get('LOCAL', 'False') == 'True'  # Cloud Run üçün default False
 
-# Host seçimi
-if not LOCAL:
-    # Cloud Run-da Public IP ilə qoşul
-    DB_HOST = os.environ.get('DB_HOST', '34.60.148.42')
-else:
-    # Lokal PC
-    DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
+
+# # Cloud Run-da Public IP ilə qoşul
+# DB_HOST = os.environ.get('DB_HOST', '34.60.148.42')
+
+# Lokal PC
+DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
 
 
 DATABASES = {
