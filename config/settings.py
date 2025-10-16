@@ -87,17 +87,16 @@ DB_USER = os.environ.get('DB_USER', 'ecommerce_user')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '12345')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 
-# --- Environment detection ---
-CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')  # Cloud Run üçün
-LOCAL = os.environ.get('LOCAL', 'True') == 'True'  # Lokal test üçün env dəyişəni
+# Environment detection
+CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
+LOCAL = os.environ.get('LOCAL', 'False') == 'True'  # Cloud Run üçün default False
 
-# --- Host seçimi ---
-if CLOUD_SQL_CONNECTION_NAME and not LOCAL:
-    # Cloud Run-da işləyir, Private IP / Cloud SQL connector
-    DB_HOST = f'/cloudsql/{CLOUD_SQL_CONNECTION_NAME}'
-elif LOCAL:
-    # Lokal PC-də test
-    # Lokalda Cloud SQL Proxy istifadə edilirsə 127.0.0.1, yoxsa Public IP
+# Host seçimi
+if not LOCAL:
+    # Cloud Run-da Public IP ilə qoşul
+    DB_HOST = os.environ.get('DB_HOST', '34.60.148.42')
+else:
+    # Lokal PC
     DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
 
 
