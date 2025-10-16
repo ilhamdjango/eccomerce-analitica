@@ -16,21 +16,21 @@ echo "  Port: $DB_PORT"
 echo "  DB: $DB_NAME"
 echo "  User: $DB_USER"
 
-# --- Django Migrate və Static files ---
-echo "Running Django migrations..."
-python manage.py migrate --noinput
+# # --- Django Migrate və Static files ---
+# echo "Running Django migrations..."
+# python manage.py migrate --noinput
 
 # echo "Collecting static files..."
-# python manage.py collectstatic --noinput --clear
+python manage.py collectstatic --noinput --clear
 
-# --- Optional: Superuser yaratmaq ---
-echo "Creating superuser if not exists..."
-python manage.py shell -c "
-from django.contrib.auth import get_user_model
-User = get_user_model()
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin','admin@example.com','admin')
-"
+# # --- Optional: Superuser yaratmaq ---
+# echo "Creating superuser if not exists..."
+# python manage.py shell -c "
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+# if not User.objects.filter(username='admin').exists():
+#     User.objects.create_superuser('admin','admin@example.com','admin')
+# "
 
 # --- Gunicorn serverini işə sal ---
 echo "Starting Gunicorn on 0.0.0.0:${PORT:-8080}..."
