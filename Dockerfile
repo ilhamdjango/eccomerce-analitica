@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 # pip quraşdır və güncəllə
 RUN pip install --upgrade pip
 
-# Layihə fayllarını kopyala
+# Layihə fayllarını kopyala.
 COPY . .
 
 # Dependencies quraşdır (virtualenv olmadan)
