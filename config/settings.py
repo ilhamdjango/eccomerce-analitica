@@ -17,8 +17,7 @@ CSRF_TRUSTED_ORIGINS = ['https://ecommerce-analitic-808729853617.me-west1.run.ap
 
 # --- Security ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-this')
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
-
+DEBUG = True
 ALLOWED_HOSTS = [
     '*'
 ]
@@ -80,7 +79,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # --- Database configuration (Cloud Run + Local) ---
 CLOUD_SQL_CONNECTION_NAME = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
 
-DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_NAME = os.environ.get('DB_NAME', 'ecommerce_db')
 DB_USER = os.environ.get('DB_USER', 'ecommerce_user')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '12345')
