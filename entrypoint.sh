@@ -16,14 +16,11 @@ echo "  Port: $DB_PORT"
 echo "  DB: $DB_NAME"
 echo "  User: $DB_USER"
 
-# # --- Django Migrate və Static files ---
+# --- Django Migrate ---
 echo "Running Django migrations..."
 python manage.py migrate --noinput
 
-# echo "Collecting static files..."
-python manage.py collectstatic --noinput --clear
-
-# # --- Optional: Superuser yaratmaq ---
+# --- Optional: Superuser ---
 echo "Creating superuser if not exists..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
@@ -41,5 +38,3 @@ exec gunicorn config.wsgi:application \
     --timeout 0 \
     --access-logfile - \
     --error-logfile -
-
- #
