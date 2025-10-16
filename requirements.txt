@@ -1,0 +1,27 @@
+# Django framework
+Django>=4.3,<6
+
+# PostgreSQL üçün driver
+psycopg2-binary>=2.9
+
+# Production server
+gunicorn>=20.1.0
+
+# REST API üçün
+djangorestframework==3.16.1
+
+# HTTP sorğular üçün
+requests>=2.31
+
+# Env fayllarını oxumaq üçün
+python-dotenv>=1.0
+
+# Migrations üçün
+django-environ==0.12.0
+
+# Caching və async funksiyalar üçün (lazımdırsa)
+asgiref>=3.8
+
+# Extra faydalı paketlər
+pytz>=2023.3
+sqlparse>=0.4.4
