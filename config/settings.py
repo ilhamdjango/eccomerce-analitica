@@ -22,13 +22,13 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    'ecommerce-analitic-808729853617.us-central1.run.app',
+    'https://eccomerce-analitica-808729853617.europe-west1.run.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "localhost",
     "127.0.0.1",
-    "https://ecommerce-analitic-808729853617.us-central1.run.app",
+    "https://eccomerce-analitica-808729853617.europe-west1.run.app",
 ]
 
 
