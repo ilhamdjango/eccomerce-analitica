@@ -6,6 +6,7 @@ __pycache__/
 
 # Virtual environment
 .venv/
+uv/
 
 # IDE
 .idea/
@@ -16,3 +17,9 @@ analitic/migrations/
 
 # Lock files
 uv.lock
+
+# Environment variables
+.env
+
+# Static files
+staticfiles/
