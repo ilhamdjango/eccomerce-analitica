@@ -6,22 +6,26 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# --- Load .env file ---
-load_dotenv()  # PC-də və Render-də .env faylından oxuyacaq
-
 # --- Base directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# --- Load .env file ---
+load_dotenv(dotenv_path=BASE_DIR / '.env')  # Dəqiq yol göstərilir
 
 # --- Security ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-this')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['*']  # Production üçün domain əlavə edə bilərsən
+
+ALLOWED_HOSTS = [
+    '*',  # bütün hostlara icazə (test üçün)
+    'eccomerce-analitica.onrender.com',  # Render server domain
+]
 
 # --- CSRF ---
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:8000',
-    # Render domain əlavə olunacaqsa buraya yaz
+    'https://eccomerce-analitica.onrender.com',  # Render server domain
 ]
 
 # --- Applications ---
@@ -73,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'ecommerce_db'),
         'USER': os.environ.get('DB_USER', 'ecommerce_user'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '123456'),
         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
