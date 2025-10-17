@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     postgresql-client \
-    netcat \
+    netcat-openbsd \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,6 +27,7 @@ ENV DJANGO_SETTINGS_MODULE=config.settings
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
 ENV ENV=DEPLOY
+ENV DOCKER=1
 
 # Port expose
 EXPOSE ${PORT}

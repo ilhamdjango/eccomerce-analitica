@@ -16,11 +16,11 @@ services:
   web:
     build: .
     container_name: ecommerce-web
-    command: bash -c "/entrypoint.sh"
+    command: bash -c "./entrypoint.sh"
     ports:
       - "8000:8080"
     env_file:
-      - .env.docker
+      - .env
     depends_on:
       - db
 
