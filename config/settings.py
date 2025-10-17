@@ -16,6 +16,11 @@ if os.environ.get("RENDER", None):
 else:
     load_dotenv(dotenv_path=BASE_DIR / '.env')
 
+# --- Sınaq üçün DB dəyərlərini çap et ---
+print("📦 DB name =", os.environ.get("DB_NAME"))
+print("📦 DB host =", os.environ.get("DB_HOST"))
+print("📦 DB user =", os.environ.get("DB_USER"))
+
 # --- Security ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-this')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'

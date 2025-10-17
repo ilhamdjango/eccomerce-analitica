@@ -17,8 +17,8 @@ echo "  DB: $DB_NAME"
 echo "  User: $DB_USER"
 
 # --- Django Migrate ---
-#echo "Running Django migrations..."
-#python manage.py migrate --noinput
+echo "Running Django migrations..."
+python manage.py migrate --noinput
 
 # --- Optional: Superuser ---
 echo "Creating superuser if not exists..."
