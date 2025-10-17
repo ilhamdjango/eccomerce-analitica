@@ -3,11 +3,11 @@ set -e
 
 echo "=== Starting entrypoint ==="
 
-# --- DB host və digər parametrlər ---
+# --- DB host təyini ---
 export DB_HOST=${DB_HOST:-dpg-d3ov2it6ubrc73akec2g-a.oregon-postgres.render.com}
 export DB_USER=${DB_USER:-ecommerce_user}
-export DB_NAME=${DB_NAME:-ecommerce_db_0zrg}
-export DB_PASSWORD=${DB_PASSWORD:-AYAgPL0rQuE4zdpQ4Af6EJnOUGomfHRZ}
+export DB_NAME=${DB_NAME:-ecommerce_db}
+export DB_PASSWORD=${DB_PASSWORD:-12345}
 export DB_PORT=${DB_PORT:-5432}
 
 echo "Using Postgres:"
@@ -20,17 +20,16 @@ echo "  User: $DB_USER"
 echo "Running Django migrations..."
 python manage.py migrate --noinput
 
-# --- Collect static files ---
-echo "Collecting static files..."
-python manage.py collectstatic --noinput
-
-# --- Optional: Superuser ---
+# --- Superuser yaratmaq (non-interactive) ---
 echo "Creating superuser if not exists..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
 User = get_user_model()
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin','admin@example.com','admin')
+username = 'ilham'
+email = 'ilham@example.com'
+password = 'ecommerce'
+if not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username=username, email=email, password=password)
 "
 
 # --- Gunicorn serverini işə sal ---
