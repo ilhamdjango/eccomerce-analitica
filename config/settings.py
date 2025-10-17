@@ -9,15 +9,19 @@ from dotenv import load_dotenv
 # --- Base directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- Load .env file ---
-load_dotenv(dotenv_path=BASE_DIR / '.env')  # Dəqiq yol göstərilir
+# --- Load .env file automatically ---
+# Render serverdə .env.render, lokalda .env
+if os.environ.get("RENDER", None):
+    load_dotenv(dotenv_path=BASE_DIR / '.env.render')
+else:
+    load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 # --- Security ---
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-this')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
-    '*',  # bütün hostlara icazə (test üçün)
+    '*',  # test üçün bütün hostlara icazə
     'eccomerce-analitica.onrender.com',  # Render server domain
 ]
 
@@ -25,7 +29,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:8000',
-    'https://eccomerce-analitica.onrender.com',  # Render server domain
+    'https://eccomerce-analitica.onrender.com',
 ]
 
 # --- Applications ---
