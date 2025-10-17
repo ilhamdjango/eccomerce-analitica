@@ -20,6 +20,10 @@ echo "  User: $DB_USER"
 echo "Running Django migrations..."
 python manage.py migrate --noinput
 
+# --- Static files toplamaq ---
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
+
 # --- Superuser yaratmaq (non-interactive) ---
 echo "Creating superuser if not exists..."
 python manage.py shell -c "

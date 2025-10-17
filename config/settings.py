@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 # --- Middleware ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise əlavə edildi
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,8 +109,11 @@ USE_TZ = True
 
 # --- Static files ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic ilə toplanacaq
+STATICFILES_DIRS = [BASE_DIR / "static"]  # lokal staticlər
+
+# WhiteNoise settings (collectstatic sonrası faylları serv etmək üçün)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- Default primary key field type ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
