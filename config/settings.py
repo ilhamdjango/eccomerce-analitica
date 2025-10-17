@@ -58,13 +58,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Local Windows üçün:
+if os.environ.get("DOCKER", None) == "1":
+    DB_HOST = os.environ.get("DB_HOST", "db")  # Docker Compose konteyner adı
+else:
+    DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")  # Lokal host
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'ecommerce_db'),
         'USER': os.environ.get('DB_USER', 'ecommerce_user'),
         'PASSWORD': os.environ.get('DB_PASSWORD', '12345'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
+        'HOST': DB_HOST,
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
