@@ -4,7 +4,7 @@ set -e
 echo "=== Starting entrypoint ==="
 
 # --- DB host təyini ---
-export DB_HOST=${DB_HOST:-dpg-d3ov2it6ubrc73akec2g-a.oregon-postgres.render.com}
+export DB_HOST=${DB_HOST:-db}
 export DB_USER=${DB_USER:-ecommerce_user}
 export DB_NAME=${DB_NAME:-ecommerce_db}
 export DB_PASSWORD=${DB_PASSWORD:-12345}
@@ -15,6 +15,15 @@ echo "  Host: $DB_HOST"
 echo "  Port: $DB_PORT"
 echo "  DB: $DB_NAME"
 echo "  User: $DB_USER"
+
+# --- Wait for Postgres ---
+echo "Waiting for Postgres to be ready..."
+until nc -z $DB_HOST $DB_PORT; do
+  echo "Postgres is unavailable - sleeping"
+  sleep 2
+done
+
+echo "Postgres is up - continuing..."
 
 # --- Django Migrate ---
 echo "Running Django migrations..."

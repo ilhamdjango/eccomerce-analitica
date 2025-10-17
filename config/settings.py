@@ -1,43 +1,21 @@
-"""
-Django settings for config project.
-"""
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# --- Base directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- Load .env file automatically ---
-# Render serverdə .env.render, lokalda .env
-if os.environ.get("RENDER", None):
-    load_dotenv(dotenv_path=BASE_DIR / '.env.render')
-else:
-    load_dotenv(dotenv_path=BASE_DIR / '.env')
+# Load env
+load_dotenv(dotenv_path=BASE_DIR / '.env.docker')
 
-# --- Sınaq üçün DB dəyərlərini çap et ---
-print("📦 DB name =", os.environ.get("DB_NAME"))
-print("📦 DB host =", os.environ.get("DB_HOST"))
-print("📦 DB user =", os.environ.get("DB_USER"))
-
-# --- Security ---
+# Security
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-this')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = [
-    '*',  # test üçün bütün hostlara icazə
-    'eccomerce-analitica.onrender.com',  # Render server domain
-]
+# CSRF
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
 
-# --- CSRF ---
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-    'https://eccomerce-analitica.onrender.com',
-]
-
-# --- Applications ---
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,10 +27,9 @@ INSTALLED_APPS = [
     'analitic',
 ]
 
-# --- Middleware ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise əlavə edildi
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static fayllar üçün
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,19 +58,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# --- Database configuration ---
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'ecommerce_db'),
         'USER': os.environ.get('DB_USER', 'ecommerce_user'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', '123456'),
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '12345'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
-# --- Password validation ---
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -101,19 +76,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# --- Internationalization ---
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# --- Static files ---
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic ilə toplanacaq
-STATICFILES_DIRS = [BASE_DIR / "static"]  # lokal staticlər
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# WhiteNoise settings (collectstatic sonrası faylları serv etmək üçün)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# --- Default primary key field type ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
