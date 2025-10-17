@@ -3,11 +3,11 @@ set -e
 
 echo "=== Starting entrypoint ==="
 
-# --- DB host təyini ---
+# --- DB host və digər parametrlər ---
 export DB_HOST=${DB_HOST:-dpg-d3ov2it6ubrc73akec2g-a.oregon-postgres.render.com}
 export DB_USER=${DB_USER:-ecommerce_user}
-export DB_NAME=${DB_NAME:-ecommerce_db}
-export DB_PASSWORD=${DB_PASSWORD:-12345}
+export DB_NAME=${DB_NAME:-ecommerce_db_0zrg}
+export DB_PASSWORD=${DB_PASSWORD:-AYAgPL0rQuE4zdpQ4Af6EJnOUGomfHRZ}
 export DB_PORT=${DB_PORT:-5432}
 
 echo "Using Postgres:"
@@ -19,6 +19,10 @@ echo "  User: $DB_USER"
 # --- Django Migrate ---
 echo "Running Django migrations..."
 python manage.py migrate --noinput
+
+# --- Collect static files ---
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
 
 # --- Optional: Superuser ---
 echo "Creating superuser if not exists..."
