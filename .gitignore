@@ -21,4 +21,6 @@ uv.lock
 .env
 
 # Static files
+static/
 staticfiles/
+
