@@ -8,5 +8,5 @@ router.register(r'product-views', ProductViewViewSet, basename='product-view')
 router.register(r'analytics-products', AnalyticsProductViewSet, basename='analytics-product')
 
 urlpatterns = [
-    path('', include(router.urls)),  # router bütün endpoint-ləri bu app daxilində aktiv edir
+    path('', include(router.urls)),
 ]

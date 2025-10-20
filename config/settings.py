@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'analitic',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
