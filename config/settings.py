@@ -26,7 +26,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'analitic',
     'drf_yasg',
+    'drf_spectacular',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -45,7 +48,21 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     'DEFAULT_VERSION': 'v1',
     'ALLOWED_VERSIONS': ('v1', 'v2'),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Analitic API',
+    'DESCRIPTION': 'Analitic servisin API endpoint-ləri',
+    'VERSION': 'v1',
+    'CONTACT': {'email': 'ilham@example.com'},
+    'LICENSE': {'name': 'BSD License'},
+}
+
+
+
 
 
 
