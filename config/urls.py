@@ -1,24 +1,35 @@
 from django.contrib import admin
 from django.urls import path, include
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Analitic API",
+        default_version='v1',
+        description="Analitic servisin API endpoint-ləri",
+        contact=openapi.Contact(email="ilham@example.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # App endpoints
+    # API v1
     path('api/v1/', include('analitic.urls')),
+
+    # API v2
     path('api/v2/', include('analitic.urls')),
 
     # OpenAPI JSON
-    path('openapi.json', SpectacularAPIView.as_view(), name='schema'),
+    path('openapi.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 
-    # Swagger UI
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-
-    # Redoc UI
-    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-
-    # Boş path '/' → Swagger UI-ə yönləndirilir
-    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='home'),
+    # Swagger / Redoc
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
-
