@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 
-# 1️⃣ Shops
+
 class Shop(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Öz UUID id
     external_id = models.UUIDField(unique=True)  # Xarici sistemdən gələn UUID
@@ -14,7 +14,6 @@ class Shop(models.Model):
         return f"{self.name} ({self.external_id})"
 
 
-# 2️⃣ Products
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     external_id = models.UUIDField(unique=True)
@@ -25,7 +24,7 @@ class Product(models.Model):
         return f"{self.name} ({self.external_id})"
 
 
-# 3️⃣ ShopViews
+
 class ShopView(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="views")
@@ -35,7 +34,6 @@ class ShopView(models.Model):
         return f"Shop View - {self.shop}"
 
 
-# 4️⃣ ProductViews
 class ProductView(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="views")
@@ -45,7 +43,6 @@ class ProductView(models.Model):
         return f"Product View - {self.product}"
 
 
-# 5️⃣ AnalyticsProducts
 class AnalyticsProduct(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
