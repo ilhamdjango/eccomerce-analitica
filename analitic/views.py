@@ -37,11 +37,9 @@ class AnalyticsProductViewSet(viewsets.ModelViewSet):
     queryset = AnalyticsProduct.objects.all()
     serializer_class = AnalyticsProductSerializer
 
-    # Optional: total count per shop + product
     @action(detail=False, methods=['get'])
     def count(self, request):
         data = AnalyticsProduct.objects.values(
-            'shop__external_id', 'shop__name',
-            'product_variation__external_id', 'product_variation__name'
-        ).annotate(total_count=Count('count'))
+            'shop', 'product_variation'
+        ).annotate(total_count=Sum('count'))
         return Response(data)

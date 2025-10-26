@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Ətraf mühit dəyişənləri
 ENV DJANGO_SETTINGS_MODULE=config.settings
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8080
+ENV PORT=8080  
 ENV ENV=DEPLOY
 ENV DOCKER=1
 

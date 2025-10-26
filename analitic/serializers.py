@@ -82,26 +82,9 @@ class ProductViewSerializer(serializers.ModelSerializer):
 
 # --- AnalyticsProduct Serializer ---
 class AnalyticsProductSerializer(serializers.ModelSerializer):
-    id = serializers.UUIDField(read_only=True)
-    shop = serializers.UUIDField()
-    product_variation = serializers.UUIDField()
-    created_at = serializers.DateTimeField(read_only=True)
-
     class Meta:
         model = AnalyticsProduct
         fields = ['id', 'shop', 'product_variation', 'count', 'original_price', 'sale_price', 'created_at']
+        read_only_fields = ['id', 'created_at']
 
-    def create(self, validated_data):
-        shop_uuid = validated_data.pop('shop')
-        product_uuid = validated_data.pop('product_variation')
 
-        # UUID yoxdursa avtomatik yaradılır
-        shop, _ = Shop.objects.get_or_create(external_id=shop_uuid, defaults={'name': f"Shop {shop_uuid}"})
-        product, _ = Product.objects.get_or_create(external_id=product_uuid, defaults={'name': f"Product {product_uuid}"})
-
-        analytics = AnalyticsProduct.objects.create(
-            shop=shop,
-            product_variation=product,
-            **validated_data
-        )
-        return analytics

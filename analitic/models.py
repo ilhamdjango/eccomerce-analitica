@@ -45,8 +45,8 @@ class ProductView(models.Model):
 
 class AnalyticsProduct(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    product_variation = models.ForeignKey(Product, on_delete=models.CASCADE)
+    shop = models.UUIDField()  # Sadəcə UUID saxlayır
+    product_variation = models.UUIDField()  # Sadəcə UUID saxlayır
     count = models.IntegerField(default=0)
     original_price = models.DecimalField(max_digits=10, decimal_places=2)
     sale_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
