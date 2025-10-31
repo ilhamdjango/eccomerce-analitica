@@ -30,13 +30,15 @@ class AnalyticsProductModelTest(TestCase):
     def test_create_analytics_product(self):
         shop = Shop.objects.create(external_id=uuid.uuid4(), name="Test Shop")
         product = Product.objects.create(external_id=uuid.uuid4(), name="Test Product")
+
         analytics = AnalyticsProduct.objects.create(
-            shop=shop,
-            product_variation=product,
+            shop=shop.external_id,             # obyekt yox, UUID göndəririk
+            product_variation=product.external_id,  # obyekt yox, UUID
             count=10,
             original_price=90,
             sale_price=100
         )
+
         self.assertEqual(analytics.count, 10)
-        self.assertEqual(analytics.shop, shop)
-        self.assertEqual(analytics.product_variation, product)
+        self.assertEqual(analytics.shop, shop.external_id)
+        self.assertEqual(analytics.product_variation, product.external_id)
