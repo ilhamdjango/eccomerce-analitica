@@ -1,3 +1,10 @@
+import uuid
+from rest_framework.test import APITestCase
+from rest_framework import status
+from django.urls import reverse
+from analitic.models import Shop, Product, ShopView, ProductView, AnalyticsProduct
+
+
 class AnalyticsProductIntegrationTest(APITestCase):
     def test_create_analytics_product_full_flow(self):
         # Lazımi obyektləri yaradın
