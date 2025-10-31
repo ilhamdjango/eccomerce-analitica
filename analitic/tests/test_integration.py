@@ -1,15 +1,10 @@
 import os
 import django
+import uuid
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-import uuid
-from rest_framework.test import APITestCase
-from rest_framework import status
-from django.urls import reverse
-from analitic.models import Shop, ShopView, Product, ProductView, AnalyticsProduct
-import uuid
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
@@ -48,8 +43,13 @@ class ProductViewIntegrationTest(APITestCase):
 
 class AnalyticsProductIntegrationTest(APITestCase):
     def test_create_analytics_product_full_flow(self):
+        # Lazımi obyektləri yaradın
         shop_id = uuid.uuid4()
         product_id = uuid.uuid4()
+
+        shop = Shop.objects.create(external_id=shop_id, name="Test Shop")
+        product = Product.objects.create(external_id=product_id, name="Test Product", shop=shop)
+
         data = {
             "shop": str(shop_id),
             "product_variation": str(product_id),
@@ -62,7 +62,5 @@ class AnalyticsProductIntegrationTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # DB yoxlaması
-        shop = Shop.objects.get(external_id=shop_id)
-        product = Product.objects.get(external_id=product_id)
         analytics = AnalyticsProduct.objects.get(shop=shop, product_variation=product)
         self.assertEqual(analytics.count, 5)
