@@ -1,3 +1,14 @@
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
+
+import uuid
+from rest_framework.test import APITestCase
+from rest_framework import status
+from django.urls import reverse
+from analitic.models import Shop, ShopView, Product, ProductView, AnalyticsProduct
 import uuid
 from rest_framework.test import APITestCase
 from rest_framework import status

@@ -11,3 +11,5 @@ drf-yasg==1.21.11
 drf-spectacular==0.28.0
 requests
 pytest
+pytest-django
+
